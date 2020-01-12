@@ -10,7 +10,7 @@ exports.get_games = async (req, res) => {
             index = parseInt(req.body.index)
         }
         if (games_by_title_data.length === 0) {
-            res.status(400).json([`Sorry ${req.body.title} does not exists`])
+            res.status(204).json([`Sorry ${req.body.title} does not exists`])
         } else{
             res.json(games_by_title_data.slice(index, index +5))
         }
