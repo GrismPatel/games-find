@@ -1,0 +1,19 @@
+{
+  "name": "games-find",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrismPatel/games-find.git"
+  },
+  "author": "Grism Patel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GrismPatel/games-find/issues"
+  },
+  "homepage": "https://github.com/GrismPatel/games-find#readme"
+}
