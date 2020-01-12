@@ -1,0 +1,42 @@
+pipeline {
+    tools {
+        nodejs "node"
+    }
+
+    environment {
+        VERSION_LABEL = "${GIT_COMMIT}-${BUILD_TAG}"
+        SOURCE_BUNDLE = "games-search-${VERSION_LABEL}.zip"
+        AWS_ENVIRONMENT_NAME = "GAMES-SEARCH-EB-DEV"
+    }
+
+    stages {
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Budle for AWS') {
+            steps {
+                sh 'zip "${SOURCE_BUNDLE}" -r * .[^.]*'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'aws s3 cp "${SOURCE_BUNDLE}" s3://your-bucket-name/your-key/'
+                sh 'aws elasticbeanstalk create-application-version \
+                        --application-name your-application-name \
+                        --region your-region-host \
+                        --version-label "${VERSION_LABEL}" \
+                        --source-bundle "S3Bucket=your-bucket-name, S3Key=your-key/${SOURCE_BUNDLE}"'
+                sh 'aws elasticbeanstalk update-environment \
+                        --application-name your-application-name \
+                        --region your-region-host \
+                        --environment-name "${AWS_ENVIRONMENT_NAME}" \
+                        --version-label "${VERSION_LABEL}"'
+            }
+        }
+    }
+}
