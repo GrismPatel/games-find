@@ -7,6 +7,7 @@ pipeline {
         VERSION_LABEL = "${GIT_COMMIT}-${BUILD_TAG}"
         SOURCE_BUNDLE = "games-search-${VERSION_LABEL}.zip"
         AWS_ENVIRONMENT_NAME = "GAMES-SEARCH-EB-DEV"
+        REGION_NAME = your-region-host
     }
 
     stages {
@@ -28,12 +29,12 @@ pipeline {
                 sh 'aws s3 cp "${SOURCE_BUNDLE}" s3://your-bucket-name/your-key/'
                 sh 'aws elasticbeanstalk create-application-version \
                         --application-name your-application-name \
-                        --region your-region-host \
+                        --region "${REGION_NAME}" \
                         --version-label "${VERSION_LABEL}" \
                         --source-bundle "S3Bucket=your-bucket-name, S3Key=your-key/${SOURCE_BUNDLE}"'
                 sh 'aws elasticbeanstalk update-environment \
                         --application-name your-application-name \
-                        --region your-region-host \
+                        --region "${REGION_NAME}" \
                         --environment-name "${AWS_ENVIRONMENT_NAME}" \
                         --version-label "${VERSION_LABEL}"'
             }
