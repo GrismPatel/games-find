@@ -14,11 +14,11 @@
 # For jenkins
 1. Need to have jenkins pipeline setup and defying the branch.
 2. Need to change the jenkins.pipeline file and replace it with `your-bucket-name`, `your-key`, `your-region-host`.
-3. Other stage should be added after installing dependency to run the test cases.
+3. Other stage should be added after installing dependency to run the test cases. All the test cases will be exccute that are inside the test folder with file name test.js
 `
-stage('Budle for AWS') {
+stage('Run the test') {
             steps {
-                sh 'zip "${SOURCE_BUNDLE}" -r * .[^.]*'
+                sh 'npm test'
             }
         }
 `.
