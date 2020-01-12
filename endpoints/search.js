@@ -6,6 +6,9 @@ exports.get_games = async (req, res) => {
     try{
         var games_by_title_data = await games_by_title(games, req.body.title)
         var index = parseInt(req.body.index)
+        if (index === undefined) {
+            index = 0
+        }
         if (games_by_title_data.length === 0) {
             res.status(400).json(`Sorry ${req.body.title} does not exists`)
         } else{
