@@ -10,7 +10,7 @@ exports.get_games = async (req, res) => {
             index = parseInt(req.body.index)
         }
         if (games_by_title_data.length === 0) {
-            res.status(204).json([`Sorry ${req.body.title} does not exists`])
+            res.status(200).send(`Sorry ${req.body.title} does not exists`)
         } else{
             res.json(games_by_title_data.slice(index, index +5))
         }
@@ -25,6 +25,11 @@ const games_by_title = async(games, game_title) => {
         if (games.length === 0 || Array.isArray(games) === false) {
             console.log("ERROR: Games is of wrong type")
             throw Error("Games is of wrong type")
+        }
+
+        if (game_title === undefined || game_title == "" ){
+            console.error("ERROR: Game to search cannot be empty")
+            throw Error("Game to search cannot be empty")
         }
         var results = []
         for (var i = 0; i < games.length; i ++) {
